@@ -9,6 +9,7 @@ import (
 	"great-talent-be/exception"
 	"great-talent-be/repository"
 	"great-talent-be/service"
+	"os"
 )
 
 func main() {
@@ -27,6 +28,10 @@ func main() {
 
 	employeeController.Route(app)
 
-	err := app.Listen(":3000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	err := app.Listen(":" + port)
 	exception.PanicIfNeeded(err)
 }
