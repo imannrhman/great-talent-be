@@ -32,6 +32,7 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
+
 	err := app.Listen(":" + port)
 	exception.PanicIfNeeded(err)
 }
