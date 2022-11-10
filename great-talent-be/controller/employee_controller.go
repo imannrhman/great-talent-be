@@ -22,6 +22,9 @@ func (controller *EmployeeController) Route(app *fiber.App) {
 	app.Post("/api/employee", controller.Create)
 	app.Get("/api/employees", controller.List)
 	app.Get("/api/total-salary/:id", controller.TotalSalary)
+	app.Put("/api/employee/:id", controller.Create)
+	app.Patch("/api/employee/:id", controller.Create)
+	app.Delete("/api/employee/:id", controller.Create)
 }
 
 func (controller *EmployeeController) Create(ctx *fiber.Ctx) error {
@@ -55,4 +58,5 @@ func (controller *EmployeeController) TotalSalary(ctx *fiber.Ctx) error {
 		Status: "OK",
 		Data:   response,
 	})
+
 }

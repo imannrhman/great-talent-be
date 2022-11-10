@@ -88,3 +88,11 @@ func (repository employeeRepositoryImpl) FindOne(employeeID string) entity.Emplo
 
 	return employee
 }
+
+func (repository employeeRepositoryImpl) Update(employeeID string) {
+
+}
+
+func (repository employeeRepositoryImpl) Delete(employeeID string) {
+
+}

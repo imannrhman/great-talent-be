@@ -6,4 +6,6 @@ type EmployeeService interface {
 	Create(request model.Employee) (response model.Employee)
 	List() (responses []model.Employee)
 	TotalSalary(id string) (response model.TotalSalary)
+	Update(id string) (response model.Employee)
+	Delete(id string)
 }

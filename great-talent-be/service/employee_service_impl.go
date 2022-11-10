@@ -87,6 +87,11 @@ func (service employeeServiceImpl) TotalSalary(id string) (response model.TotalS
 	return response
 }
 
+func (service employeeServiceImpl) Update(id string) (response model.Employee) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func salary(class int32) float64 {
 	switch class {
 	case 1:
