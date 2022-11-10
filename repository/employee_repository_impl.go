@@ -19,6 +19,37 @@ type employeeRepositoryImpl struct {
 	Collection *mongo.Collection
 }
 
+func (repository employeeRepositoryImpl) Update(employeeID string, employee entity.Employee) entity.Employee {
+	ctx, cancel := config.NewMongoContext()
+	defer cancel()
+
+	filter := bson.M{"_id": employeeID}
+
+	_, err := repository.Collection.UpdateOne(ctx, filter, bson.M{
+		"$set": bson.M{
+			"nik":        employee.NIK,
+			"name":       employee.Name,
+			"gender":     employee.Gender,
+			"class":      employee.Class,
+			"salary":     employee.Salary,
+			"allowance":  employee.Allowance,
+			"salary_cut": employee.SalaryCuts,
+		},
+	})
+
+	exception.PanicIfNeeded(err)
+	return employee
+}
+
+func (repository employeeRepositoryImpl) Delete(employeeID string) {
+	ctx, cancel := config.NewMongoContext()
+	defer cancel()
+
+	_, err := repository.Collection.DeleteOne(ctx, bson.M{"_id": employeeID})
+
+	exception.PanicIfNeeded(err)
+}
+
 func (repository employeeRepositoryImpl) Insert(employee entity.Employee) {
 	ctx, cancel := config.NewMongoContext()
 	defer cancel()
