@@ -46,6 +46,55 @@ func (service employeeServiceImpl) Create(request model.Employee) (response mode
 	return response
 }
 
+func (service employeeServiceImpl) Update(id string, request model.Employee) (response model.Employee) {
+	employee := service.EmployeeRepository.FindOne(id)
+	if request.NIK != "" {
+		employee.NIK = request.NIK
+	}
+
+	if request.Name != "" {
+		employee.Name = request.Name
+	}
+
+	if request.Gender != "" {
+		employee.Gender = request.Gender
+	}
+
+	if request.Class != 0 {
+		employee.Class = request.Class
+		employee.Salary = salary(request.Class)
+	}
+
+	if request.Allowance != 0.0 {
+		employee.Allowance = request.Allowance
+	}
+
+	if request.SalaryCuts != 0.0 {
+		employee.SalaryCuts = request.SalaryCuts
+	}
+
+	validation.UpdateValidate(request)
+
+	employee = service.EmployeeRepository.Update(id, employee)
+	response = model.Employee{
+		ID:         employee.ID,
+		NIK:        employee.NIK,
+		Name:       employee.Name,
+		Class:      employee.Class,
+		Gender:     employee.Gender,
+		Salary:     employee.Salary,
+		Allowance:  employee.Allowance,
+		SalaryCuts: employee.SalaryCuts,
+	}
+
+	return response
+}
+
+func (service employeeServiceImpl) Delete(id string) (response string) {
+	service.EmployeeRepository.Delete(id)
+	return id
+}
+
 func (service employeeServiceImpl) List() (responses []model.Employee) {
 	employees := service.EmployeeRepository.FetchAll()
 
