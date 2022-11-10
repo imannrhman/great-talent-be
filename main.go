@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"great-talent-be/config"
@@ -14,7 +13,6 @@ import (
 
 func main() {
 	configuration := config.New()
-	fmt.Print(configuration.Get("MONGO_URI"))
 	database := config.NewMongoDatabase(configuration)
 
 	employeeRepository := repository.NewEmployeeRepository(database)
