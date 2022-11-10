@@ -22,3 +22,16 @@ func Validate(request model.Employee) {
 		})
 	}
 }
+
+func UpdateValidate(request model.Employee) {
+	err := validation.ValidateStruct(&request,
+		validation.Field(&request.NIK, validation.RuneLength(16, 16)),
+		validation.Field(&request.Gender, validation.In("Male", "Female")),
+		validation.Field(&request.Class, validation.Max(4)),
+	)
+	if err != nil {
+		panic(exception.ValidationError{
+			Message: err.Error(),
+		})
+	}
+}
