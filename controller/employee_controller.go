@@ -20,6 +20,8 @@ func NewEmployeeController(employeeService *service.EmployeeService) EmployeeCon
 
 func (controller *EmployeeController) Route(app *fiber.App) {
 	app.Post("/api/employee", controller.Create)
+	app.Patch("/api/employee/:id", controller.Update)
+	app.Delete("/api/employee/:id", controller.Delete)
 	app.Get("/api/employees", controller.List)
 	app.Get("/api/total-salary/:id", controller.TotalSalary)
 }
@@ -33,9 +35,32 @@ func (controller *EmployeeController) Create(ctx *fiber.Ctx) error {
 
 	response := controller.EmployeeService.Create(request)
 	return ctx.JSON(model.WebResponse{
-		Code:   200,
-		Status: "OK",
-		Data:   response,
+		Code:     201,
+		Status:   "OK",
+		Messages: "Berhasil mendaftarkan karyawan !",
+		Data:     response,
+	})
+}
+
+func (controller *EmployeeController) Update(ctx *fiber.Ctx) error {
+	var request model.Employee
+	err := ctx.BodyParser(&request)
+	exception.PanicIfNeeded(err)
+	response := controller.EmployeeService.Update(ctx.Params("id"), request)
+	return ctx.JSON(model.WebResponse{
+		Code:     200,
+		Status:   "OK",
+		Messages: "Berhasil mengupdate karyawan !",
+		Data:     response,
+	})
+}
+
+func (controller *EmployeeController) Delete(ctx *fiber.Ctx) error {
+	response := controller.EmployeeService.Delete(ctx.Params("id"))
+	return ctx.JSON(model.WebResponse{
+		Code:     200,
+		Messages: "Berhasil menghapus karyawan !",
+		Data:     response,
 	})
 }
 
