@@ -26,9 +26,9 @@ func main() {
 
 	employeeController.Route(app)
 
-	port := os.Getenv("PORT")
+	port, ok := os.LookupEnv("PORT")
 
-	if port == "" {
+	if !ok {
 		port = "3000"
 	}
 	err := app.Listen(":" + port)
