@@ -1,18 +1,12 @@
 package controller
 
 import (
-	"embed"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"great-talent-be/exception"
 	"great-talent-be/model"
 	"great-talent-be/service"
-	"html/template"
 )
-
-var resources embed.FS
-
-var t = template.Must(template.ParseFS(resources, "templates/*"))
 
 type EmployeeController struct {
 	EmployeeService service.EmployeeService
