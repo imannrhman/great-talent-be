@@ -1,8 +1,6 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
-	"great-talent-be/exception"
 	"os"
 )
 
@@ -17,8 +15,6 @@ func (config *configImpl) Get(key string) string {
 	return os.Getenv(key)
 }
 
-func New(filename ...string) Config {
-	err := godotenv.Load(filename...)
-	exception.PanicIfNeeded(err)
+func New() Config {
 	return &configImpl{}
 }
